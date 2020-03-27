@@ -1,8 +1,9 @@
-# Binary Mask File Generation (Generating Ground truth images)
+### Binary Mask File Generation (Generating Ground truth images)
 
-There are two files placed.
+There are two files placed here. 
 
 One is custom_1.py, this contains the class and functions defined for generating the ground truth image.
+
 Another one is JSON_TO_MASK_V1.ipynb, on executing this ipynb, the binary ground truth is generated.
 
 I tried below approach for generating binary masking (ground truth):
@@ -19,33 +20,36 @@ Steps:
   
 3.Install mrcnn library(!pip install mrcnn)
 
-4.In custom1.py, following changes need to be updated.
+4.In custom_1.py, following changes need to be updated.
 
   1.Update the root directory path in 12th line, where train folder is created.
   
-  2.In CustomConfig class:
+  2.In CustomConfig class:  
+
+
     a.In 28th line across NAME variable, replace the "annotated label" with your annotated label, which was created using VIA tool.
     
     b.In 34th line update NUM_CLASSES (1-Background, 1-foreground)(binary object masking)
     
   3.In CustomDataset class:
   
-    a.in load_custom function,In 48th line replace the "annotated label" with your annotated label ,
-       in "self.add_class"  with annotated label like self.add_class("annotated label", 1, "annotated label") #binary ground truth
-  
+    a.In load_custom function, 48th line replace the "annotated label" with your annotated label.
+        
     b.in 91st line under "self.add_image(" update the first parameter, i.e replace the "annotated label" with your annotated label
 	
     c.in load_mask function , in 106th line "image_info["source"] !" , replace the "annotated label" with your annotated label.
     
-	  d.in image_reference function, in 126th line,replace the "annotated label" with your annotated label.
+    d.in image_reference function, in 126th line,replace the "annotated label" with your annotated label.
     
-5.Place the custom1.py file in folder where JSON_TO_MASK_V1.ipynb is present.	JSON_TO_MASK_V1.ipynb helps to create ground truth inside train_masked.
+5.Place the custom1.py file in folder where JSON_TO_MASK_V1.ipynb is present.
+ 
+ JSON_TO_MASK_V1.ipynb helps to create ground truth inside train_masked.
   
 6.In JSON_TO_MASK_V1.ipynb,following changes need to be performed:
 
   a.update custom_DIR to the root directory (exclude train directory)
   
-  b.In the next cell, using os.chdir , update the directroy path along with train masked:
+  b.In the next cell, which has os.chdir , update the root directory path along with train masked:
     example:root directory/train_masked
     
 7.Execute the JSON_TO_MASK_V1.ipynb file, the binary masked ground truth image will be generated inside train_masked folder
